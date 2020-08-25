@@ -19,24 +19,26 @@ data class MarketList(
     @ColumnInfo(name = DatabaseContract.MarketListContract.COLUMN_DONE)
     var done: Int
 ) {
-    fun fromContentValues(contentValues: ContentValues): MarketList {
-        var id = 0
-        var _name = ""
-        var _count = 0L
-        var _done = 0
+    companion object {
+        fun fromContentValues(contentValues: ContentValues): MarketList {
+            var id = 0
+            var _name = ""
+            var _count = 0L
+            var _done = 0
 
-        if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
-            id = contentValues.getAsInteger(DatabaseContract.MarketListContract.COLUMN_LIST_ID)
+            if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
+                id = contentValues.getAsInteger(DatabaseContract.MarketListContract.COLUMN_LIST_ID)
 
-        if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
-            _name = contentValues.getAsString(DatabaseContract.MarketListContract.COLUMN_NAME)
+            if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
+                _name = contentValues.getAsString(DatabaseContract.MarketListContract.COLUMN_NAME)
 
-        if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
-            _count = contentValues.getAsLong(DatabaseContract.MarketListContract.COLUMN_COUNT)
+            if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
+                _count = contentValues.getAsLong(DatabaseContract.MarketListContract.COLUMN_COUNT)
 
-        if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
-            _done = contentValues.getAsInteger(DatabaseContract.MarketListContract.COLUMN_DONE)
+            if (contentValues.containsKey(DatabaseContract.MarketListContract.COLUMN_LIST_ID))
+                _done = contentValues.getAsInteger(DatabaseContract.MarketListContract.COLUMN_DONE)
 
-        return MarketList(id, _name, _count, _done)
+            return MarketList(id, _name, _count, _done)
+        }
     }
 }

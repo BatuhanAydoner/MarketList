@@ -4,9 +4,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.moonturns.marketlist.R
 import com.moonturns.marketlist.model.MarketList
+import com.moonturns.marketlist.view.MarketListFragment
+import com.moonturns.marketlist.view.MarketListFragmentDirections
 import kotlinx.android.synthetic.main.rv_item.view.*
 
 class MarketListRecyclerviewAdapter(var list: ArrayList<MarketList>) :
@@ -26,6 +30,11 @@ class MarketListRecyclerviewAdapter(var list: ArrayList<MarketList>) :
         holder.itemView.txtProductName.text = list[position].name
         holder.itemView.txtCount.text = list[position].count
         holder.itemView.cbDone.text = list[position].name
+
+        holder.itemView.setOnClickListener {
+            var action = MarketListFragmentDirections.actionMarketListFragmentToNewProductFragment(list[position])
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 
     class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,12 +1,15 @@
 package com.moonturns.marketlist.model
 
 import android.content.ContentValues
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.moonturns.marketlist.database.DatabaseContract
+import kotlinx.android.parcel.Parcelize
 
 // Model class
+@Parcelize
 @Entity(tableName = DatabaseContract.MarketListContract.TABLE_NAME)
 data class MarketList(
     @PrimaryKey(autoGenerate = true)
@@ -18,7 +21,7 @@ data class MarketList(
     var count: String,
     @ColumnInfo(name = DatabaseContract.MarketListContract.COLUMN_DONE)
     var done: Int
-) {
+) : Parcelable {
     companion object {
         fun fromContentValues(contentValues: ContentValues): MarketList {
             var id = 0

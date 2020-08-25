@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.moonturns.marketlist.R
 import com.moonturns.marketlist.adapter.MarketListRecyclerviewAdapter
 import com.moonturns.marketlist.database.DatabaseRepository
+import com.moonturns.marketlist.model.MarketList
 import com.moonturns.marketlist.viewmodel.MarketListViewModel
 import kotlinx.android.synthetic.main.fragment_market_list.*
 
@@ -46,7 +47,9 @@ class MarketListFragment : Fragment() {
     // Click events of buttons
     private fun buttonClickEvents() {
         fabNewProduct.setOnClickListener {
-            var action = MarketListFragmentDirections.actionMarketListFragmentToNewProductFragment()
+            var action = MarketListFragmentDirections.actionMarketListFragmentToNewProductFragment(
+                MarketList(0, "", "", 0)
+            )
             view?.findNavController()?.navigate(action)
         }
     }
@@ -68,6 +71,7 @@ class MarketListFragment : Fragment() {
         })
     }
 
+    // Get data from ShowItem asyncTask class
     private fun getData() {
         context?.let {
             DatabaseRepository.ShowList(it, viewModel).execute()

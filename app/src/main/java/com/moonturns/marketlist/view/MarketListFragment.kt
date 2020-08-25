@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.moonturns.marketlist.R
+import com.moonturns.marketlist.database.DatabaseRepository
 import kotlinx.android.synthetic.main.fragment_market_list.*
 
 class MarketListFragment : Fragment() {
@@ -19,6 +21,9 @@ class MarketListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        context?.let {
+            DatabaseRepository.ShowList(it).execute()
+        }
         buttonClickEvents()
     }
 
@@ -29,7 +34,8 @@ class MarketListFragment : Fragment() {
     // Click events of buttons
     private fun buttonClickEvents() {
         fabNewProduct.setOnClickListener {
-
+            var action = MarketListFragmentDirections.actionMarketListFragmentToNewProductFragment()
+            view?.findNavController()?.navigate(action)
         }
     }
 }

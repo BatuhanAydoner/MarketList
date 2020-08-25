@@ -88,6 +88,7 @@ class MarketListContentProvider : ContentProvider() {
             100 -> {
                 values?.let {
                     updated = listDao.update(MarketList.fromContentValues(values))
+                    context?.contentResolver?.notifyChange(uri, null)
                 }
             }
         }
@@ -100,6 +101,7 @@ class MarketListContentProvider : ContentProvider() {
         when (matcher.match(uri)) {
             100 -> {
                 deleted = listDao.delete(ContentUris.parseId(uri).toInt())
+                context?.contentResolver?.notifyChange(uri, null)
             }
         }
 

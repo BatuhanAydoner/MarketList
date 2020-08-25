@@ -42,7 +42,7 @@ class NewProductFragment : Fragment() {
     private fun buttonClickEvents() {
         btnSave.setOnClickListener {
             context?.let {
-                var newProduct = MarketList( 0, "Water", "3L", 0)
+                var newProduct = MarketList( 0, "Water", "3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L3L", 0)
                 DatabaseRepository.InsertItem(it).execute(newProduct)
             }
         }

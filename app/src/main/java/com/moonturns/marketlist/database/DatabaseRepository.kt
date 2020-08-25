@@ -3,9 +3,9 @@ package com.moonturns.marketlist.database
 import android.content.ContentValues
 import android.content.Context
 import android.os.AsyncTask
-import android.util.Log
 import android.widget.Toast
 import com.moonturns.marketlist.model.MarketList
+import com.moonturns.marketlist.viewmodel.MarketListViewModel
 import java.lang.ref.WeakReference
 
 class DatabaseRepository {
@@ -40,7 +40,7 @@ class DatabaseRepository {
         }
     }
 
-    class ShowList(context: Context) : AsyncTask<Any, Any, List<MarketList>>() {
+    class ShowList(context: Context, var viewModel: MarketListViewModel) : AsyncTask<Any, Any, List<MarketList>>() {
 
         private var weakReference = WeakReference(context)
 
@@ -74,7 +74,7 @@ class DatabaseRepository {
 
         override fun onPostExecute(result: List<MarketList>?) {
             super.onPostExecute(result)
-            
+            viewModel.marketList.value = result
         }
     }
 }

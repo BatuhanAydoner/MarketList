@@ -1,7 +1,8 @@
-package com.moonturns.marketlist
+package com.moonturns.marketlist.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.moonturns.marketlist.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

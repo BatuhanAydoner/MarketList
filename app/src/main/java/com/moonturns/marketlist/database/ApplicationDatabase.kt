@@ -9,7 +9,7 @@ import com.moonturns.marketlist.model.MarketList
 
 @Database(entities = arrayOf(MarketList::class), version = 1)
 abstract class ApplicationDatabase: RoomDatabase() {
-    abstract fun listDao(): Dao
+    abstract fun listDao(): ListDao
 
     companion object {
         @Volatile

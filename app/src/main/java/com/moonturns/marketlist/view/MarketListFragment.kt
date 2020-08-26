@@ -2,10 +2,8 @@ package com.moonturns.marketlist.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -38,6 +36,8 @@ class MarketListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         initRecyclerview()
         viewModel = ViewModelProvider(this).get(MarketListViewModel::class.java)
         observeData()
@@ -59,6 +59,26 @@ class MarketListFragment : Fragment() {
         rvMarketList.apply {
             adapter = myAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_deleteAll -> {
+                context?.let {
+                    DatabaseRepository.DeleteAll(it).execute()
+                    myAdapter.update(arrayListOf())
+                }
+                return true
+            }
+            else -> {
+                return false
+            }
         }
     }
 

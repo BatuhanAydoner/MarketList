@@ -1,5 +1,6 @@
 package com.moonturns.marketlist.adapter
 
+import android.content.ContentValues
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.moonturns.marketlist.R
+import com.moonturns.marketlist.database.DatabaseContract
+import com.moonturns.marketlist.database.DatabaseRepository
 import com.moonturns.marketlist.model.MarketList
 import com.moonturns.marketlist.view.MarketListFragment
 import com.moonturns.marketlist.view.MarketListFragmentDirections
@@ -31,9 +34,30 @@ class MarketListRecyclerviewAdapter(var list: ArrayList<MarketList>) :
         holder.itemView.txtCount.text = list[position].count
         holder.itemView.cbDone.text = list[position].name
 
+        if (list[position].done == 1) {
+            holder.itemView.cbDone.isChecked = true
+        }
+
         holder.itemView.setOnClickListener {
             var action = MarketListFragmentDirections.actionMarketListFragmentToNewProductFragment(list[position])
             Navigation.findNavController(it).navigate(action)
+        }
+
+        holder.itemView.cbDone.setOnCheckedChangeListener { buttonView, isChecked ->
+            var checked = 0
+            if (isChecked == true) {
+                checked = 1
+            }else {
+                checked = 0
+            }
+
+            var contentValues = ContentValues()
+            contentValues.put(DatabaseContract.MarketListContract.COLUMN_LIST_ID, list[position].listId)
+            contentValues.put(DatabaseContract.MarketListContract.COLUMN_NAME, list[position].name)
+            contentValues.put(DatabaseContract.MarketListContract.COLUMN_COUNT, list[position].count)
+            contentValues.put(DatabaseContract.MarketListContract.COLUMN_DONE, checked)
+
+            DatabaseRepository.UpdateItem(holder.itemView.context).execute(contentValues)
         }
     }
 

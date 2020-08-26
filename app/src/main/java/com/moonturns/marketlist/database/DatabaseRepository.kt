@@ -102,6 +102,24 @@ class DatabaseRepository {
         }
     }
 
+    class DeleteAll(context: Context): AsyncTask<Int, Any, String>() {
+        private var weakReference = WeakReference(context)
+        override fun doInBackground(vararg params: Int?): String {
+
+            var deleted = weakReference.get()?.contentResolver?.delete(Uri.parse(MarketListContentProvider.CONTENT_URI.toString()), null, null)
+            if (deleted!! > 0) {
+                return "Deleted"
+            }else {
+                return "Could not delete"
+            }
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            Toast.makeText(weakReference.get(), result, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     class UpdateItem(context: Context): AsyncTask<ContentValues, Any, String>() {
         private var weakReference = WeakReference(context)
         override fun doInBackground(vararg params: ContentValues?): String {

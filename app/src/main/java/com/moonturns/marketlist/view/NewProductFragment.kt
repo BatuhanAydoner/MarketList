@@ -54,7 +54,6 @@ class NewProductFragment : Fragment() {
 
         btnUpdateItem.setOnClickListener {
             updateMarketList()
-            it.visibility = View.GONE
         }
     }
 

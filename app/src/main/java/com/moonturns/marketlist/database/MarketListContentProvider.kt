@@ -103,6 +103,9 @@ class MarketListContentProvider : ContentProvider() {
                 selectionArgs?.let {
                     deleted = listDao.deleteItem(it[0].toInt())
                 }
+                if (selectionArgs == null) {
+                    deleted = listDao.deleteAll()
+                }
                 context?.contentResolver?.notifyChange(uri, null)
             }
         }

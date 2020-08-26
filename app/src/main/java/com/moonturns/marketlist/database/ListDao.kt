@@ -19,7 +19,7 @@ interface ListDao {
     fun update(marketList: MarketList): Int
 
     @Query("DELETE FROM ${DatabaseContract.MarketListContract.TABLE_NAME}")
-    fun deleteAll()
+    fun deleteAll(): Int
 
     @Query("DELETE FROM ${DatabaseContract.MarketListContract.TABLE_NAME} WHERE ${DatabaseContract.MarketListContract.COLUMN_LIST_ID} = :id")
     fun deleteItem(id: Int): Int

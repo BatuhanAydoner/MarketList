@@ -44,20 +44,7 @@ class MarketListRecyclerviewAdapter(var list: ArrayList<MarketList>) :
         }
 
         holder.itemView.cbDone.setOnCheckedChangeListener { buttonView, isChecked ->
-            var checked = 0
-            if (isChecked == true) {
-                checked = 1
-            }else {
-                checked = 0
-            }
-
-            var contentValues = ContentValues()
-            contentValues.put(DatabaseContract.MarketListContract.COLUMN_LIST_ID, list[position].listId)
-            contentValues.put(DatabaseContract.MarketListContract.COLUMN_NAME, list[position].name)
-            contentValues.put(DatabaseContract.MarketListContract.COLUMN_COUNT, list[position].count)
-            contentValues.put(DatabaseContract.MarketListContract.COLUMN_DONE, checked)
-
-            DatabaseRepository.UpdateItem(holder.itemView.context).execute(contentValues)
+            updateRoom(holder, position, isChecked)
         }
     }
 
@@ -65,6 +52,25 @@ class MarketListRecyclerviewAdapter(var list: ArrayList<MarketList>) :
 
     }
 
+    // Update a row at room
+    private fun updateRoom(holder: MyHolder, position: Int, isChecked: Boolean) {
+        var checked = 0
+        if (isChecked == true) {
+            checked = 1
+        }else {
+            checked = 0
+        }
+
+        var contentValues = ContentValues()
+        contentValues.put(DatabaseContract.MarketListContract.COLUMN_LIST_ID, list[position].listId)
+        contentValues.put(DatabaseContract.MarketListContract.COLUMN_NAME, list[position].name)
+        contentValues.put(DatabaseContract.MarketListContract.COLUMN_COUNT, list[position].count)
+        contentValues.put(DatabaseContract.MarketListContract.COLUMN_DONE, checked)
+
+        DatabaseRepository.UpdateItem(holder.itemView.context).execute(contentValues)
+    }
+
+    // Update adapter
     fun update(newList: List<MarketList>) {
         list.clear()
         list.addAll(newList)

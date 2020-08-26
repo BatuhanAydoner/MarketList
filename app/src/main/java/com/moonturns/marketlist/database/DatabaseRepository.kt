@@ -11,7 +11,11 @@ import com.moonturns.marketlist.model.MarketList
 import com.moonturns.marketlist.viewmodel.MarketListViewModel
 import java.lang.ref.WeakReference
 
+/* This class has some asynctask classes.
+* For example, InsertItem, DeleteItem, DeleteAll, UpdateItem.
+* These classes are for Room database.*/
 class DatabaseRepository {
+    // Insert an item
     class InsertItem(context: Context) : AsyncTask<MarketList, Any, String>() {
 
         override fun onPreExecute() {
@@ -43,6 +47,7 @@ class DatabaseRepository {
         }
     }
 
+    // Query all list
     class ShowList(context: Context, var viewModel: MarketListViewModel) : AsyncTask<Any, Any, List<MarketList>>() {
 
         private var weakReference = WeakReference(context)
@@ -81,6 +86,7 @@ class DatabaseRepository {
         }
     }
 
+    // Delete an item
     class DeleteItem(context: Context): AsyncTask<Int, Any, String>() {
         private var weakReference = WeakReference(context)
         override fun doInBackground(vararg params: Int?): String {
@@ -102,6 +108,7 @@ class DatabaseRepository {
         }
     }
 
+    // Delete all database
     class DeleteAll(context: Context): AsyncTask<Int, Any, String>() {
         private var weakReference = WeakReference(context)
         override fun doInBackground(vararg params: Int?): String {
@@ -120,6 +127,7 @@ class DatabaseRepository {
         }
     }
 
+    // Update an item
     class UpdateItem(context: Context): AsyncTask<ContentValues, Any, String>() {
         private var weakReference = WeakReference(context)
         override fun doInBackground(vararg params: ContentValues?): String {

@@ -57,6 +57,7 @@ class NewProductFragment : Fragment() {
         }
     }
 
+    // Add a new product to room
     private fun addMarketListToRoom() {
         var newProduct = MarketList( 0, etProductName.text.toString(), etProductCount.text.toString(), 0)
         context?.let {
@@ -64,6 +65,7 @@ class NewProductFragment : Fragment() {
         }
     }
 
+    // Delete a product from room
     private fun deleteFromRoom() {
         context?.let {
             DatabaseRepository.DeleteItem(it).execute(marketList?.listId)
@@ -73,6 +75,7 @@ class NewProductFragment : Fragment() {
 
     }
 
+    // Update a product from room
     private fun updateMarketList() {
         var contentValues = ContentValues()
         contentValues.put(DatabaseContract.MarketListContract.COLUMN_LIST_ID, marketList?.listId)

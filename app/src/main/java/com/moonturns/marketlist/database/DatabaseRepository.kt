@@ -1,8 +1,11 @@
 package com.moonturns.marketlist.database
 
+import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.os.AsyncTask
+import android.util.Log
 import android.widget.Toast
 import com.moonturns.marketlist.model.MarketList
 import com.moonturns.marketlist.viewmodel.MarketListViewModel
@@ -75,6 +78,44 @@ class DatabaseRepository {
         override fun onPostExecute(result: List<MarketList>?) {
             super.onPostExecute(result)
             viewModel.marketList.value = result
+        }
+    }
+
+    class DeleteItem(context: Context): AsyncTask<Int, Any, String>() {
+        private var weakReference = WeakReference(context)
+        override fun doInBackground(vararg params: Int?): String {
+            var selectionClause = DatabaseContract.MarketListContract.COLUMN_LIST_ID + " = ?"
+            var selectArgs = arrayOf("${params[0]}")
+
+            var deleted = weakReference.get()?.contentResolver?.delete(Uri.parse(MarketListContentProvider.CONTENT_URI.toString()), selectionClause, selectArgs)
+            Log.e("myApp", "${params[0]}")
+            if (deleted!! > 0) {
+                return "Deleted"
+            }else {
+                return "Could not delete"
+            }
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            Toast.makeText(weakReference.get(), result, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    class UpdateItem(context: Context): AsyncTask<ContentValues, Any, String>() {
+        private var weakReference = WeakReference(context)
+        override fun doInBackground(vararg params: ContentValues?): String {
+            var updated = weakReference.get()?.contentResolver?.update(MarketListContentProvider.CONTENT_URI, params[0], null, null)
+            if (updated!! > 0) {
+                return "Updated"
+            }else {
+                return "Could not update"
+            }
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            Toast.makeText(weakReference.get(), result, Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -6,9 +6,9 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
+import android.util.Log
 import com.moonturns.marketlist.model.MarketList
 import java.lang.IllegalArgumentException
-import java.util.regex.Matcher
 
 class MarketListContentProvider : ContentProvider() {
 
@@ -100,7 +100,9 @@ class MarketListContentProvider : ContentProvider() {
         var deleted = 0
         when (matcher.match(uri)) {
             100 -> {
-                deleted = listDao.delete(ContentUris.parseId(uri).toInt())
+                selectionArgs?.let {
+                    deleted = listDao.deleteItem(it[0].toInt())
+                }
                 context?.contentResolver?.notifyChange(uri, null)
             }
         }
